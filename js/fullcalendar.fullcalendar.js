@@ -5,7 +5,7 @@
 
 (function ($) {
 
-Drupal.fullcalendar.plugins.fullcalendar = {
+Backdrop.fullcalendar.plugins.fullcalendar = {
   options: function (fullcalendar, settings) {
     if (settings.ajax) {
       fullcalendar.submitInit(settings);
@@ -22,10 +22,10 @@ Drupal.fullcalendar.plugins.fullcalendar = {
         return false;
       },
       drop: function (date, allDay, jsEvent, ui) {
-        for (var $plugin in Drupal.fullcalendar.plugins) {
-          if (Drupal.fullcalendar.plugins.hasOwnProperty($plugin) && $.isFunction(Drupal.fullcalendar.plugins[$plugin].drop)) {
+        for (var $plugin in Backdrop.fullcalendar.plugins) {
+          if (Backdrop.fullcalendar.plugins.hasOwnProperty($plugin) && $.isFunction(Backdrop.fullcalendar.plugins[$plugin].drop)) {
             try {
-              Drupal.fullcalendar.plugins[$plugin].drop(date, allDay, jsEvent, ui, this, fullcalendar);
+              Backdrop.fullcalendar.plugins[$plugin].drop(date, allDay, jsEvent, ui, this, fullcalendar);
             }
             catch (exception) {
               alert(exception);
@@ -64,7 +64,7 @@ Drupal.fullcalendar.plugins.fullcalendar = {
       },
       eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc) {
         $.post(
-          Drupal.settings.basePath + 'fullcalendar/ajax/update/drop/' + event.eid,
+          Backdrop.settings.basePath + 'fullcalendar/ajax/update/drop/' + event.eid,
           'field=' + event.field + '&entity_type=' + event.entity_type + '&index=' + event.index + '&day_delta=' + dayDelta + '&minute_delta=' + minuteDelta + '&all_day=' + allDay + '&dom_id=' + event.dom_id,
           fullcalendar.update
         );
@@ -72,7 +72,7 @@ Drupal.fullcalendar.plugins.fullcalendar = {
       },
       eventResize: function (event, dayDelta, minuteDelta, revertFunc) {
         $.post(
-          Drupal.settings.basePath + 'fullcalendar/ajax/update/resize/' + event.eid,
+          Backdrop.settings.basePath + 'fullcalendar/ajax/update/resize/' + event.eid,
           'field=' + event.field + '&entity_type=' + event.entity_type + '&index=' + event.index + '&day_delta=' + dayDelta + '&minute_delta=' + minuteDelta + '&dom_id=' + event.dom_id,
           fullcalendar.update
         );

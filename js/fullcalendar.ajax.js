@@ -1,6 +1,6 @@
 (function ($) {
 
-Drupal.fullcalendar.fullcalendar.prototype.dateChange = function (fields) {
+Backdrop.fullcalendar.fullcalendar.prototype.dateChange = function (fields) {
   var view = this.$calendar.find('.fullcalendar').fullCalendar('getView');
   if (!this.toggle && view.name != 'month') {
     var name = view.name;
@@ -31,18 +31,18 @@ Drupal.fullcalendar.fullcalendar.prototype.dateChange = function (fields) {
   }
 };
 
-Drupal.fullcalendar.fullcalendar.prototype.submitInit = function (settings) {
+Backdrop.fullcalendar.fullcalendar.prototype.submitInit = function (settings) {
   var domId = this.dom_id.replace('.view-dom-id-', '');
-  var ajaxView = Drupal.settings.views.ajaxViews['views_dom_id:' + domId];
+  var ajaxView = Backdrop.settings.views.ajaxViews['views_dom_id:' + domId];
   this.tm = settings.theme ? 'ui' : 'fc';
   var $submit = this.$calendar.find('.views-exposed-form .views-submit-button');
   if (this.$calendar.find('.views-exposed-widget').length == settings.fullcalendar_fields_count + 1) {
     $submit.hide();
   }
   var $submit_button = $submit.find('.form-submit');
-  this.$submit = new Drupal.ajax('main', $submit_button[0], {
+  this.$submit = new Backdrop.ajax('main', $submit_button[0], {
     event: 'fullcalendar_submit',
-    url: Drupal.settings.basePath + 'fullcalendar/ajax/results/' + settings.view_name + '/' + settings.view_display + '/' + ajaxView.view_args,
+    url: Backdrop.settings.basePath + 'fullcalendar/ajax/results/' + settings.view_name + '/' + settings.view_display + '/' + ajaxView.view_args,
     fullcalendar: this,
     submit: {dom_id: domId}
   });
@@ -50,12 +50,12 @@ Drupal.fullcalendar.fullcalendar.prototype.submitInit = function (settings) {
   $submit_button.click($.proxy(this.fetchEvents, this));
 };
 
-Drupal.fullcalendar.fullcalendar.prototype.fetchEvents = function () {
+Backdrop.fullcalendar.fullcalendar.prototype.fetchEvents = function () {
   this.$calendar.find('.fc-button').addClass(this.tm + '-state-disabled');
   $(this.$submit.element).trigger('fullcalendar_submit');
 };
 
-Drupal.ajax.prototype.commands.fullcalendar_results_response = function (ajax, response, status) {
+Backdrop.ajax.prototype.commands.fullcalendar_results_response = function (ajax, response, status) {
   ajax.element_settings.fullcalendar.refetch = true;
   ajax.element_settings.fullcalendar.$calendar
     .find('.fullcalendar-content')

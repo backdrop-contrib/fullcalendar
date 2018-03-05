@@ -1,6 +1,8 @@
 name = FullCalendar Colors
 description = Allows definition of colors for FullCalendar events based on taxonomies, node types, etc.
-core = 7.x
+backdrop = 1.x
+type = module
 package = FullCalendar
 dependencies[] = colors
 dependencies[] = fullcalendar
+hidden = TRUE

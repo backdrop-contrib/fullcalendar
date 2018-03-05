@@ -1,6 +1,7 @@
 name = FullCalendar Legend
 description = Show the bundle names of content types on a FullCalendar. Intended for use with FullCalendar Colors.
-core = 7.x
+backdrop = 1.x
+type = module
 package = FullCalendar
 dependencies[] = fullcalendar
 dependencies[] = block

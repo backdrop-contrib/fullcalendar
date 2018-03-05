@@ -5,6 +5,8 @@
  * Preprocess functions for FullCalendar.
  */
 
+backdrop_add_library('fullcalendar', 'fullcalendar');
+
 /**
  * Builds the FullCalendar structure as a render array.
  */
@@ -53,7 +55,7 @@ function template_preprocess_fullcalendar(&$variables) {
   $settings = array();
   fullcalendar_include_api();
   $fullcalendar_options = module_invoke_all('fullcalendar_options_info');
-  uasort($fullcalendar_options, 'drupal_sort_weight');
+  uasort($fullcalendar_options, 'backdrop_sort_weight');
   foreach (array_intersect(array_keys($fullcalendar_options), module_implements('fullcalendar_options_process')) as $module) {
     $function = $module . '_fullcalendar_options_process';
     $function($variables, $settings);
@@ -74,7 +76,7 @@ function template_preprocess_fullcalendar(&$variables) {
  * Render the FullCalendar.
  */
 function theme_fullcalendar($variables) {
-  return drupal_render($variables['element']);
+  return backdrop_render($variables['element']);
 }
 
 /**
@@ -111,7 +113,7 @@ function template_preprocess_fullcalendar_event(&$variables) {
  * Render the event.
  */
 function theme_fullcalendar_event($variables) {
-  return drupal_render($variables['element']);
+  return backdrop_render($variables['element']);
 }
 
 /**
@@ -196,7 +198,7 @@ function fullcalendar_prepare_events($view, $rows, $options) {
           // If one value is FALSE, return FALSE. The identical operator is needed
           // because of the return value of array_search().
           $editable = array_search(FALSE, $editable, TRUE) === FALSE;
-          drupal_alter('fullcalendar_editable', $editable, $entity, $view);
+          backdrop_alter('fullcalendar_editable', $editable, $entity, $view);
           $entity->editable = $editable;
         }
 
@@ -205,8 +207,8 @@ function fullcalendar_prepare_events($view, $rows, $options) {
 
         // Create a string of valid HTML class names and add them to the entity.
         $classes = module_invoke_all('fullcalendar_classes', $entity);
-        drupal_alter('fullcalendar_classes', $classes, $entity);
-        $classes = array_map('drupal_html_class', $classes);
+        backdrop_alter('fullcalendar_classes', $classes, $entity);
+        $classes = array_map('backdrop_html_class', $classes);
         $entity->class = implode(' ', array_unique($classes));
 
         // Default URL.
@@ -332,7 +334,7 @@ function _fullcalendar_process_dates($instance, $entity, $field, $item) {
 
   // Allow modules to alter the date objects.
   $context = array('instance' => $instance, 'entity' => $entity, 'field' => $field);
-  drupal_alter('fullcalendar_process_dates', $date1, $date2, $context);
+  backdrop_alter('fullcalendar_process_dates', $date1, $date2, $context);
 
   $start = $date1->format(DATE_FORMAT_DATETIME);
   $end = $date2->format(DATE_FORMAT_DATETIME);

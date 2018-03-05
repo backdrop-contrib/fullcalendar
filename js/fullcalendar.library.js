@@ -2,17 +2,20 @@
  * @file
  * Provides FullCalendar defaults and functions.
  */
+jQuery.curCSS = function(element, prop, val) {
+    return jQuery(element).css(prop, val);
+};
 
 (function ($) {
 
-Drupal.fullcalendar = Drupal.fullcalendar || {};
-Drupal.fullcalendar.plugins = Drupal.fullcalendar.plugins || {};
-Drupal.fullcalendar.cache = Drupal.fullcalendar.cache || {};
+Backdrop.fullcalendar = Backdrop.fullcalendar || {};
+Backdrop.fullcalendar.plugins = Backdrop.fullcalendar.plugins || {};
+Backdrop.fullcalendar.cache = Backdrop.fullcalendar.cache || {};
 
 // Alias old fullCalendar namespace.
-Drupal.fullCalendar = Drupal.fullcalendar;
+Backdrop.fullCalendar = Backdrop.fullcalendar;
 
-Drupal.fullcalendar.fullcalendar = function (dom_id) {
+Backdrop.fullcalendar.fullcalendar = function (dom_id) {
   this.dom_id = dom_id;
   this.$calendar = $(dom_id);
   this.$options = {};
@@ -23,11 +26,11 @@ Drupal.fullcalendar.fullcalendar = function (dom_id) {
   this.$calendar.find('.fullcalendar-content').hide();
 
   // Allow other modules to overwrite options.
-  var $plugins = Drupal.fullcalendar.plugins;
-  for (var i = 0; i < Drupal.settings.fullcalendar[dom_id].weights.length; i++) {
-    var $plugin = Drupal.settings.fullcalendar[dom_id].weights[i];
+  var $plugins = Backdrop.fullcalendar.plugins;
+  for (var i = 0; i < Backdrop.settings.fullcalendar[dom_id].weights.length; i++) {
+    var $plugin = Backdrop.settings.fullcalendar[dom_id].weights[i];
     if ($plugins.hasOwnProperty($plugin) && $.isFunction($plugins[$plugin].options)) {
-      $.extend(this.$options, $plugins[$plugin].options(this, Drupal.settings.fullcalendar[this.dom_id]));
+      $.extend(this.$options, $plugins[$plugin].options(this, Backdrop.settings.fullcalendar[this.dom_id]));
     }
   }
 
@@ -39,7 +42,7 @@ Drupal.fullcalendar.fullcalendar = function (dom_id) {
   });
 }
 
-Drupal.fullcalendar.fullcalendar.prototype.update = function (result) {
+Backdrop.fullcalendar.fullcalendar.prototype.update = function (result) {
   var fcStatus = $(result.dom_id).find('.fullcalendar-status');
   if (fcStatus.is(':hidden')) {
     fcStatus.html(result.msg).slideDown();
@@ -47,14 +50,14 @@ Drupal.fullcalendar.fullcalendar.prototype.update = function (result) {
   else {
     fcStatus.effect('highlight');
   }
-  Drupal.attachBehaviors();
+  Backdrop.attachBehaviors();
   return false;
 };
 
 /**
- * Parse Drupal events from the DOM.
+ * Parse Backdrop events from the DOM.
  */
-Drupal.fullcalendar.fullcalendar.prototype.parseEvents = function (callback) {
+Backdrop.fullcalendar.fullcalendar.prototype.parseEvents = function (callback) {
   var events = [];
   var details = this.$calendar.find('.fullcalendar-event-details');
   for (var i = 0; i < details.length; i++) {

@@ -116,7 +116,7 @@ function hook_fullcalendar_process_dates_alter(&$date1, &$date2, $context) {
 function hook_fullcalendar_api() {
   return array(
     'api' => fullcalendar_api_version(),
-    'path' => drupal_get_path('module', 'MODULENAME') . '/includes',
+    'path' => backdrop_get_path('module', 'MODULENAME') . '/includes',
   );
 }
 

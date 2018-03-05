@@ -1,7 +1,7 @@
 /**
  * FullCalendar plugin implementation.
  */
-Drupal.fullcalendar.plugins.awesome = {
+Backdrop.fullcalendar.plugins.awesome = {
 
   /**
    * Add in FullCalendar options.
@@ -12,7 +12,7 @@ Drupal.fullcalendar.plugins.awesome = {
    * @see http://arshaw.com/fullcalendar/docs
    */
   options: function (fullcalendar) {
-    var settings = Drupal.settings.fullcalendar[fullcalendar.dom_id].awesome;
+    var settings = Backdrop.settings.fullcalendar[fullcalendar.dom_id].awesome;
     var options = $.extend(
       {
         theme: false,

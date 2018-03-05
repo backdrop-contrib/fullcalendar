@@ -5,14 +5,14 @@
 
 (function ($) {
 
-Drupal.behaviors.fullcalendar = {
+Backdrop.behaviors.fullcalendar = {
   attach: function (context, settings) {
     // Process each view and its settings.
     for (var dom_id in settings.fullcalendar) {
       if (settings.fullcalendar.hasOwnProperty(dom_id)) {
         // Create a new fullcalendar object unless one exists.
-        if (typeof Drupal.fullcalendar.cache[dom_id] === "undefined") {
-          Drupal.fullcalendar.cache[dom_id] = new Drupal.fullcalendar.fullcalendar(dom_id);
+        if (typeof Backdrop.fullcalendar.cache[dom_id] === "undefined") {
+          Backdrop.fullcalendar.cache[dom_id] = new Backdrop.fullcalendar.fullcalendar(dom_id);
         }
       }
     }

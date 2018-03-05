@@ -9,18 +9,14 @@
  * The default path to the FullCalendar plugin.
  */
 function fullcalendar_default_path() {
-  return module_exists('libraries') ? libraries_get_path('fullcalendar') : 'sites/all/libraries/fullcalendar';
+  return backdrop_get_path('module', 'fullcalendar') . '/library';
 }
 
 /**
- * The minimum supported version of the FullCalendar plugin.
+ * Load the .inc files.
  */
-define('FULLCALENDAR_MIN_PLUGIN_VERSION', '1.4.10');
-
-/**
- * The recommended version of the FullCalendar plugin.
- */
-define('FULLCALENDAR_RECOMMENDED_PLUGIN_VERSION', '1.5.1');
+module_load_include('inc', 'fullcalendar', 'includes/fullcalendar.fullcalendar');
+module_load_include('inc', 'fullcalendar', 'includes/views/fullcalendar.views');
 
 /**
  * Implements hook_views_api().
@@ -28,7 +24,17 @@ define('FULLCALENDAR_RECOMMENDED_PLUGIN_VERSION', '1.5.1');
 function fullcalendar_views_api() {
   return array(
     'api' => '3',
-    'path' => drupal_get_path('module', 'fullcalendar') . '/includes/views',
+    'path' => backdrop_get_path('module', 'fullcalendar') . '/includes/views',
+  );
+}
+
+/**
+ * Implements hook_autoload_info().
+ */
+function fullcalendar_autoload_info() {
+  return array(
+    'fullcalendar_plugin_style_fullcalendar' => 'includes/views/plugins/fullcalendar_plugin_style_fullcalendar.inc',
+    'fullcalendar_handler_field_gcal' => 'includes/views/handlers/fullcalendar_handler_field_gcal.inc',
   );
 }
 
@@ -49,21 +55,17 @@ function fullcalendar_theme($existing, $type, $theme, $path) {
 }
 
 /**
- * Implements hook_library().
+ * Implements hook_library_info().
  */
-function fullcalendar_library() {
-  $path = variable_get('fullcalendar_path', fullcalendar_default_path());
+function fullcalendar_library_info() {
+  $path = fullcalendar_default_path();
   $css_files = array($path . '/fullcalendar.css' => array('media' => 'screen'));
-
-  // Add fullcalendar.print.css if it is available.
-  if (version_compare(fullcalendar_get_version(), '1.5.0', '>=')) {
-    $css_files[$path . '/fullcalendar.print.css'] = array('media' => 'print');
-  }
+  $css_files[$path . '/fullcalendar.print.css'] = array('media' => 'print');
 
   $libraries['fullcalendar'] = array(
     'title' => 'FullCalendar',
     'website' => 'http://arshaw.com/fullcalendar',
-    'version' => FULLCALENDAR_MIN_PLUGIN_VERSION,
+    'version' => '1.5.1',
     'js' => array(
       fullcalendar_get_js_path() => array(),
       $path . '/gcal.js' => array(),
@@ -76,6 +78,7 @@ function fullcalendar_library() {
       array('system', 'effects.highlight'),
     ),
   );
+  debug($libraries['fullcalendar']);
   return $libraries;
 }
 
@@ -107,8 +110,8 @@ function fullcalendar_menu() {
     'title' => 'FullCalendar',
     'description' => 'Adjust FullCalendar settings.',
     'file' => 'fullcalendar.admin.inc',
-    'file path' => drupal_get_path('module', 'fullcalendar') . '/includes',
-    'page callback' => 'drupal_get_form',
+    'file path' => backdrop_get_path('module', 'fullcalendar') . '/includes',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('fullcalendar_admin_settings'),
     'access arguments' => array('administer site configuration'),
     'type' => MENU_NORMAL_ITEM,
@@ -188,15 +191,10 @@ function fullcalendar_update($action, $eid) {
   }
 
   // Save the new start/end values.
-  if (module_exists('entity')) {
-    entity_save($entity_type, $entity);
-  }
-  else {
-    field_attach_presave($entity_type, $entity);
-    field_attach_update($entity_type, $entity);
-  }
+  field_attach_presave($entity_type, $entity);
+  field_attach_update($entity_type, $entity);
 
-  drupal_json_output(array('msg' => t('The new event time has been saved.') . ' [' . l(t('Close'), NULL, array('attributes' => array('class' => array('fullcalendar-status-close')))) . ']', 'dom_id' => $_POST['dom_id']));
+  backdrop_json_output(array('msg' => t('The new event time has been saved.') . ' [' . l(t('Close'), NULL, array('attributes' => array('class' => array('fullcalendar-status-close')))) . ']', 'dom_id' => $_POST['dom_id']));
 }
 
 /**
@@ -348,15 +346,11 @@ function fullcalendar_field_is_date($field, $include_gcal = FALSE) {
  */
 function _fullcalendar_status() {
   $status = array();
-  $status['fullcalendar_plugin'] = FALSE;
+  $status['fullcalendar_plugin'] = TRUE;
 
   $path = fullcalendar_get_js_path();
   if (!file_exists($path)) {
     return FALSE;
-  }
-
-  if (version_compare(fullcalendar_get_version($path), FULLCALENDAR_MIN_PLUGIN_VERSION, '>=')) {
-    $status['fullcalendar_plugin'] = TRUE;
   }
 
   return $status;
@@ -371,7 +365,7 @@ function _fullcalendar_status() {
  * @see version_compare()
  */
 function fullcalendar_get_version($fullcalendar_path = NULL) {
-  $version = &drupal_static(__FUNCTION__);
+  $version = &backdrop_static(__FUNCTION__);
 
   if (empty($version)) {
     $version = 0;
@@ -397,15 +391,17 @@ function fullcalendar_get_version($fullcalendar_path = NULL) {
  */
 function fullcalendar_get_js_path() {
   $fullcalendar_file = array('none' => 'fullcalendar.js', 'min' => 'fullcalendar.min.js');
-  return variable_get('fullcalendar_path', fullcalendar_default_path()) . '/' . $fullcalendar_file[variable_get('fullcalendar_compression_type', 'min')];
+  //return fullcalendar_default_path() . '/' . $fullcalendar_file[variable_get('fullcalendar_compression_type', 'min')];
+  debug(fullcalendar_default_path() . '/' . $fullcalendar_file['min']);
+  return fullcalendar_default_path() . '/' . $fullcalendar_file['min'];
 }
 
 /**
  * Includes all FullCalendar API plugins.
  */
 function fullcalendar_include_api() {
-  ctools_include('plugins');
-  return ctools_plugin_api_include('fullcalendar', 'fullcalendar', fullcalendar_api_version(), fullcalendar_api_minimum_version());
+  //ctools_include('plugins');
+  //return ctools_plugin_api_include('fullcalendar', 'fullcalendar', fullcalendar_api_version(), fullcalendar_api_minimum_version());
 }
 
 /**
@@ -435,6 +431,6 @@ function fullcalendar_api_minimum_version() {
 function fullcalendar_fullcalendar_api() {
   return array(
     'api' => fullcalendar_api_version(),
-    'path' => drupal_get_path('module', 'fullcalendar') . '/includes',
+    'path' => backdrop_get_path('module', 'fullcalendar') . '/includes',
   );
 }

@@ -15,8 +15,8 @@ function fullcalendar_options_menu() {
     'title' => 'Options',
     'description' => 'Enable or disable extra FullCalendar options.',
     'file' => 'fullcalendar_options.admin.inc',
-    'file path' => drupal_get_path('module', 'fullcalendar_options') . '/includes',
-    'page callback' => 'drupal_get_form',
+    'file path' => backdrop_get_path('module', 'fullcalendar_options') . '/includes',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('fullcalendar_options_admin_settings'),
     'access arguments' => array('administer site configuration'),
     'type' => MENU_LOCAL_TASK,
@@ -32,7 +32,7 @@ function fullcalendar_options_menu() {
 function fullcalendar_options_fullcalendar_api() {
   return array(
     'api' => fullcalendar_api_version(),
-    'path' => drupal_get_path('module', 'fullcalendar_options') . '/includes',
+    'path' => backdrop_get_path('module', 'fullcalendar_options') . '/includes',
   );
 }
 

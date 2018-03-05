@@ -9,7 +9,7 @@
  * Implements hook_views_plugins().
  */
 function fullcalendar_views_plugins() {
-  $path = drupal_get_path('module', 'fullcalendar');
+  $path = backdrop_get_path('module', 'fullcalendar');
   return array(
     'module' => 'fullcalendar',
     'style' => array(
@@ -82,7 +82,7 @@ function fullcalendar_views_pre_view(&$view, &$display_id, &$args) {
 
   fullcalendar_include_api();
   $fullcalendar_options = module_invoke_all('fullcalendar_options_info');
-  uasort($fullcalendar_options, 'drupal_sort_weight');
+  backdrop_sort($fullcalendar_options, array('weight'));
   foreach (array_intersect(array_keys($fullcalendar_options), module_implements('fullcalendar_options_pre_view')) as $module) {
     $function = $module . '_fullcalendar_options_pre_view';
     $function($settings, $view);
@@ -131,7 +131,7 @@ function fullcalendar_views_pre_view(&$view, &$display_id, &$args) {
       $options['relationship'] = $field->options['relationship'];
     }
     $option_id = $view->add_item($display_id, 'filter', 'field_data_' . $field->field, $field->field . '_value', $options);
-    $settings['fullcalendar_fields'][$option_id] = drupal_html_class($option_id);
+    $settings['fullcalendar_fields'][$option_id] = backdrop_html_class($option_id);
     $settings['fullcalendar_fields_count']++;
     $view->set_item_option($display_id, 'filter', $option_id, 'expose', array('identifier' => $option_id, 'operator' => $option_id . '_op'));
 

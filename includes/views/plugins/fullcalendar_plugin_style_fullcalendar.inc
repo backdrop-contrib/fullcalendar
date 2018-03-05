@@ -112,7 +112,7 @@ class fullcalendar_plugin_style_fullcalendar extends views_plugin_style {
     // Load all FullCalendar options and merge in their form info.
     fullcalendar_include_api();
     $fullcalendar_options = module_invoke_all('fullcalendar_options_info');
-    uasort($fullcalendar_options, 'drupal_sort_weight');
+    uasort($fullcalendar_options, 'backdrop_sort_weight');
     if (!empty($fullcalendar_options)) {
       $arguments = array(&$form, &$form_state, &$this);
       // Create a separate fieldset for each module.
@@ -163,7 +163,7 @@ class fullcalendar_plugin_style_fullcalendar extends views_plugin_style {
       // Get the date fields.
       $date_fields = $this->fullcalendar_parse_fields();
       if (empty($date_fields)) {
-        drupal_set_message(t('Display "@display" requires at least one date field.', array('@display' => $this->display->display_title)), 'error');
+        backdrop_set_message(t('Display "@display" requires at least one date field.', array('@display' => $this->display->display_title)), 'error');
       }
     }
 
@@ -204,7 +204,7 @@ class fullcalendar_plugin_style_fullcalendar extends views_plugin_style {
       }
 
       // In case we recurse into an array, or need to specify the key for
-      // drupal_array_get_nested_value(), add the current key to $parents.
+      // backdrop_array_get_nested_value(), add the current key to $parents.
       $parents[] = $key;
 
       if (is_array($value)) {
@@ -213,7 +213,7 @@ class fullcalendar_plugin_style_fullcalendar extends views_plugin_style {
       }
       else {
         // Get the form definition for this key.
-        $form_value = drupal_array_get_nested_value($form, $parents);
+        $form_value = backdrop_array_get_nested_value($form, $parents);
         // Check to see if #data_type is specified, if so, cast the value.
         if (isset($form_value['#data_type'])) {
           settype($value, $form_value['#data_type']);

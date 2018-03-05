@@ -506,16 +506,16 @@ function fullcalendar_fullcalendar_options_process(&$variables, &$settings) {
       array('fullcalendar', 'fullcalendar'),
     ),
     'js' => array(
-      ctools_attach_js('fullcalendar.library', 'fullcalendar') => array('group' => JS_LIBRARY),
-      ctools_attach_js('fullcalendar.views', 'fullcalendar') => array('weight' => 20),
+      backdrop_get_path('module', 'fullcalendar') . "/js/fullcalendar.library.js" => array('group' => JS_LIBRARY),
+      backdrop_get_path('module', 'fullcalendar') . "/js/fullcalendar.views.js"  => array('weight' => 20),
     ),
     'css' => array(
-      ctools_attach_css('fullcalendar.theme', 'fullcalendar'),
+      backdrop_get_path('module', 'fullcalendar') . "/css/fullcalendar.theme.css",
     ),
   );
 
   if (!empty($settings['ajax'])) {
-    $variables['element']['#attached']['js'][] = ctools_attach_js('fullcalendar.ajax', 'fullcalendar');
+    $variables['element']['#attached']['js'][] = backdrop_get_path('module', 'fullcalendar') . "/js/fullcalendar.ajax.js" ;
   }
 
   // Add CSS and JS for each option plugin that provides it.
@@ -538,10 +538,10 @@ function fullcalendar_fullcalendar_options_process(&$variables, &$settings) {
     // If this function is being provided by another module, set the parent.
     $parent = isset($info['parent']) ? $info['parent'] : $module;
     if (!empty($info['js'])) {
-      $variables['element']['#attached']['js'][] = ctools_attach_js("$module.fullcalendar", $parent);
+      $variables['element']['#attached']['js'][] = backdrop_get_path('module', $parent) . "/js/$module.fullcalendar.js";
     }
     if (!empty($info['css'])) {
-      $variables['element']['#attached']['css'][] = ctools_attach_css("$module.fullcalendar", $parent);
+      $variables['element']['#attached']['css'][] = backdrop_get_path('module', $parent) . "/css/$module.fullcalendar.css";
     }
   }
   ksort($weights);

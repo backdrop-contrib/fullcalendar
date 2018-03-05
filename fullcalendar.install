@@ -18,17 +18,13 @@ function fullcalendar_requirements($phase) {
     if (!$status['fullcalendar_plugin']) {
       $requirements['fullcalendar_plugin'] = array(
         'title' => $t('FullCalendar plugin'),
-        'value' => $t('At least @a', array('@a' => FULLCALENDAR_MIN_PLUGIN_VERSION)),
+        'value' => $t('FullCalendar library is missing.'),
         'severity' => REQUIREMENT_ERROR,
-        'description' => $t('You need to download the !fullcalendar and extract the entire contents of the archive into the %path folder of your server.', array('!fullcalendar' => l(t('FullCalendar plugin'), 'http://arshaw.com/fullcalendar/download'), '%path' => 'sites/all/libraries')),
+        'description' => $t('The FullCalendar module may not have been installed fully or correctly.'),
       );
     }
     else {
       $plugin_version = fullcalendar_get_version();
-      if (version_compare(FULLCALENDAR_RECOMMENDED_PLUGIN_VERSION, $plugin_version) > 0) {
-        $plugin_version .= ' (Recommended version: ' . FULLCALENDAR_RECOMMENDED_PLUGIN_VERSION . ')';
-      }
-
       $requirements['fullcalendar_plugin'] = array(
         'title' => $t('FullCalendar plugin'),
         'severity' => REQUIREMENT_OK,
@@ -49,8 +45,8 @@ function fullcalendar_uninstall() {
 }
 
 /**
- * Force full cache clear to forget about old handlers and plugins.
+ * Implements hook_update_last_removed().
  */
-function fullcalendar_update_7200(&$sandbox) {
-  drupal_flush_all_caches();
+function fullcalendar_update_last_removed() {
+  return 7200;
 }
