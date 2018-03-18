@@ -9,5 +9,45 @@
  * Implements hook_uninstall().
  */
 function fullcalendar_legend_uninstall() {
-  variable_del('fullcalendar_legend_type');
+  config_clear('fullcalendar_legend.settings', 'fullcalendar_legend_type');
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function fullcalendar_legend_update_last_removed() {
+  return;
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function fullcalendar_legend_update_1000() {
+  $config = config('fullcalendar_legend.settings');
+  $config->set('fullcalendar_legend_type', update_variable_get('fullcalendar_legend_type', 'bundle'));
+  update_variable_del('fullcalendar_legend_type');
+}
+
+/**
+ * Implements hook_install().
+ */
+function fullcalendar_legend_install() {
+  // Dynamically generated variable data was detected.
+  // Dynamically generated variable data was detected on the following lines.
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function fullcalendar_legend_update_last_removed() {
+  return 1000;
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function fullcalendar_legend_update_1000() {
+  $config = config('fullcalendar_legend.settings');
+  $config->set('fullcalendar_legend_type', update_variable_get('fullcalendar_legend_type', 'bundle'));
+  update_variable_del('fullcalendar_legend_type');
 }
