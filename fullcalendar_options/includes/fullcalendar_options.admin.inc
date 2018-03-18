@@ -10,6 +10,7 @@
  */
 function fullcalendar_options_admin_settings() {
   // Use a fieldset with #tree so that it is saved as a single variable.
+  $form['#config'] = 'fullcalendar_options.settings';
   $form['fullcalendar_options'] = array(
     '#type' => 'fieldset',
     '#title' => t('Options'),
@@ -18,7 +19,7 @@ function fullcalendar_options_admin_settings() {
   );
 
   // Gather all of the available options and convert them to checkboxes.
-  $values = variable_get('fullcalendar_options', array());
+  $values = config_get('fullcalendar_options.settings', 'fullcalendar_options');
   foreach (_fullcalendar_options_list(TRUE) as $key => $info) {
     $form['fullcalendar_options'][$key] = array(
       '#type' => 'checkbox',

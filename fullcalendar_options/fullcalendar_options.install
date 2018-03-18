@@ -9,12 +9,14 @@
  * Implements hook_install().
  */
 function fullcalendar_options_install() {
-  variable_set('fullcalendar_options', array_fill_keys(array_keys(_fullcalendar_options_list(TRUE)), TRUE));
+  config_set('fullcalendar_options.settings', 'fullcalendar_options', array_fill_keys(array_keys(_fullcalendar_options_list(TRUE)), TRUE));
 }
 
 /**
- * Implements hook_uninstall().
+ * Implements hook_update_N().
  */
-function fullcalendar_options_uninstall() {
-  variable_del('fullcalendar_options');
+function fullcalendar_options_update_1000() {
+  $config = config('fullcalendar_options.settings');
+  $config->set('fullcalendar_options', update_variable_get('fullcalendar_options', array()));
+  update_variable_del('fullcalendar_options');
 }
