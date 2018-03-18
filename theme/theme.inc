@@ -55,7 +55,7 @@ function template_preprocess_fullcalendar(&$variables) {
   $settings = array();
   fullcalendar_include_api();
   $fullcalendar_options = module_invoke_all('fullcalendar_options_info');
-  uasort($fullcalendar_options, 'backdrop_sort_weight');
+  backdrop_sort($fullcalendar_options, array('weight' => SORT_NUMERIC));
   foreach (array_intersect(array_keys($fullcalendar_options), module_implements('fullcalendar_options_process')) as $module) {
     $function = $module . '_fullcalendar_options_process';
     $function($variables, $settings);
