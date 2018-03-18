@@ -395,9 +395,7 @@ function fullcalendar_get_version($fullcalendar_path = NULL) {
  */
 function fullcalendar_get_js_path() {
   $fullcalendar_file = array('none' => 'fullcalendar.js', 'min' => 'fullcalendar.min.js');
-  //return fullcalendar_default_path() . '/' . $fullcalendar_file[variable_get('fullcalendar_compression_type', 'min')];
-  debug(fullcalendar_default_path() . '/' . $fullcalendar_file['min']);
-  return fullcalendar_default_path() . '/' . $fullcalendar_file['min'];
+  return fullcalendar_default_path() . '/' . $fullcalendar_file[config_get('fullcalendar.settings','fullcalendar_compression_type')];
 }
 
 /**
@@ -437,4 +435,16 @@ function fullcalendar_fullcalendar_api() {
     'api' => fullcalendar_api_version(),
     'path' => backdrop_get_path('module', 'fullcalendar') . '/includes',
   );
+}
+
+/**
+ * Implements hook_config_info().
+ */
+function fullcalendar_config_info()
+{
+  $prefixes['fullcalendar.settings'] = array(
+    'label' => t('Fullcalendar Settings'),
+    'group' => t('Configuration'),
+  );
+  return $prefixes;
 }
