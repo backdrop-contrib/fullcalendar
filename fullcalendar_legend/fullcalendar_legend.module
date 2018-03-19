@@ -145,8 +145,7 @@ function fullcalendar_legend_get_type_taxonomy($fields) {
           }
           foreach ($field_info[$taxonomy_field_name]['settings']['allowed_values'] as $vocab) {
             $vocabulary = taxonomy_vocabulary_machine_name_load($vocab['vocabulary']);
-            foreach (taxonomy_get_tree($vocabulary->vid) as $term) {
-              $term->vocabulary_machine_name = $vocabulary->machine_name;
+            foreach (taxonomy_get_tree($vocabulary->machine_name, 0, NULL, TRUE) as $term) {
               $types[$term->tid]['entity_type'] = $entity_type;
               $types[$term->tid]['field_name'] = $field_name;
               $types[$term->tid]['bundle'] = $bundle;

@@ -78,7 +78,6 @@ function fullcalendar_library_info() {
       array('system', 'effects.highlight'),
     ),
   );
-  debug($libraries['fullcalendar']);
   return $libraries;
 }
 

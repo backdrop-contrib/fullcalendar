@@ -1,4 +1,4 @@
-.fullcalendar-legend .fc-event-default {
+.block-fullcalendar-legend-fullcalendar-legend .fc-event-default {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
@@ -8,7 +8,7 @@
   padding: 0.1em 0.5em;
 }
 
-.fullcalendar-legend .fc-event-default a {
+.block-fullcalendar-legend-fullcalendar-legend .fc-event-default a {
   border: none;
   display: block;
   width: 100%;

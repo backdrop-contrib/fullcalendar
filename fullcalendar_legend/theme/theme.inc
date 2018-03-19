@@ -12,7 +12,7 @@ function template_preprocess_fullcalendar_legend(&$variables) {
   $element = array(
     '#attached' => array(
       'css' => array(
-        ctools_attach_css('fullcalendar_legend.theme', 'fullcalendar_legend'),
+        backdrop_get_path('module', 'fullcalendar_legend') . "/css/fullcalendar_legend.theme.css",
       ),
     ),
   );
