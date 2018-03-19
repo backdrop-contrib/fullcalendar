@@ -25,6 +25,8 @@ function template_preprocess_fullcalendar(&$variables) {
       '#attributes' => array(
         'class' => array(
           'fullcalendar-status',
+          'messages',
+          'status',
         ),
       ),
     ),
