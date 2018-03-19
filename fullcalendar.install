@@ -37,11 +37,10 @@ function fullcalendar_requirements($phase) {
 }
 
 /**
- * Implements hook_uninstall().
+ * Implements hook_install().
  */
-function fullcalendar_uninstall() {
-  variable_del('fullcalendar_path');
-  variable_del('fullcalendar_compression_type');
+function fullcalendar_install() {
+  config_set('fullcalendar.settings', 'fullcalendar_path', fullcalendar_default_path());
 }
 
 /**

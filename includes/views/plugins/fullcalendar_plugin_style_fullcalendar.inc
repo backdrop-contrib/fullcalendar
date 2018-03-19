@@ -112,7 +112,7 @@ class fullcalendar_plugin_style_fullcalendar extends views_plugin_style {
     // Load all FullCalendar options and merge in their form info.
     fullcalendar_include_api();
     $fullcalendar_options = module_invoke_all('fullcalendar_options_info');
-    uasort($fullcalendar_options, 'backdrop_sort_weight');
+    backdrop_sort($fullcalendar_options, array('weight' => SORT_NUMERIC));
     if (!empty($fullcalendar_options)) {
       $arguments = array(&$form, &$form_state, &$this);
       // Create a separate fieldset for each module.

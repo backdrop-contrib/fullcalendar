@@ -170,7 +170,7 @@ function fullcalendar_update($action, $eid) {
   $langcode = field_language($entity_type, $entity, $field);
   $item = &$entity->{$field}[$langcode][$index];
   $old_start = $item['value'];
-  $old_end = $item['value2'];
+  $old_end = isset($item['value2']) ? $item['value2'] : NULL;
 
   // Adjust for different date formats.
   $format = date_type_format($item['date_type']);
@@ -178,7 +178,9 @@ function fullcalendar_update($action, $eid) {
   // Datestamp can't combine with words for strtotime, convert to ISO for now.
   if ($format == DATE_FORMAT_UNIX) {
     $old_start = date(DATE_FORMAT_ISO, $old_start);
-    $old_end = date(DATE_FORMAT_ISO, $old_end);
+    if ($old_end) {
+	  $old_end = date(DATE_FORMAT_ISO, $old_end);
+	}
   }
 
   // No break after 'drop' so it will reuse the code of 'resize'.
@@ -186,8 +188,10 @@ function fullcalendar_update($action, $eid) {
     case 'drop':
       $item['value'] = date($format, strtotime($old_start . $delta));
     case 'resize':
+    if ($old_end) {
       $item['value2'] = date($format, strtotime($old_end . $delta));
-      break;
+	}
+    break;
   }
 
   // Save the new start/end values.
@@ -391,9 +395,7 @@ function fullcalendar_get_version($fullcalendar_path = NULL) {
  */
 function fullcalendar_get_js_path() {
   $fullcalendar_file = array('none' => 'fullcalendar.js', 'min' => 'fullcalendar.min.js');
-  //return fullcalendar_default_path() . '/' . $fullcalendar_file[variable_get('fullcalendar_compression_type', 'min')];
-  debug(fullcalendar_default_path() . '/' . $fullcalendar_file['min']);
-  return fullcalendar_default_path() . '/' . $fullcalendar_file['min'];
+  return fullcalendar_default_path() . '/' . $fullcalendar_file[config_get('fullcalendar.settings','fullcalendar_compression_type')];
 }
 
 /**
@@ -433,4 +435,16 @@ function fullcalendar_fullcalendar_api() {
     'api' => fullcalendar_api_version(),
     'path' => backdrop_get_path('module', 'fullcalendar') . '/includes',
   );
+}
+
+/**
+ * Implements hook_config_info().
+ */
+function fullcalendar_config_info()
+{
+  $prefixes['fullcalendar.settings'] = array(
+    'label' => t('Fullcalendar Settings'),
+    'group' => t('Configuration'),
+  );
+  return $prefixes;
 }

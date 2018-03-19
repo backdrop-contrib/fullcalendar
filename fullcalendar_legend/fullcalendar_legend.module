@@ -32,6 +32,16 @@ function fullcalendar_legend_block_info() {
 }
 
 /**
+ * Implements hook_config_info().
+ */
+function fullcalendar_legend_config_info() {
+  $prefixes['fullcalendar_legend.settings'] = array(
+    'label' => t('Module name settings'),
+    'group' => t('Configuration'),
+  );
+}
+
+/**
  * Implements hook_block_configure().
  */
 function fullcalendar_legend_block_configure($delta = '') {
@@ -45,7 +55,7 @@ function fullcalendar_legend_block_configure($delta = '') {
         'bundle' => t('Bundle'),
         'taxonomy' => t('Taxonomy'),
       ),
-      '#default_value' => variable_get('fullcalendar_legend_type', 'bundle'),
+      '#default_value' => config_get('fullcalendar_legend.settings', 'fullcalendar_legend_type'),
       '#description' => t('Select the type of legend to display.'),
     );
   }
@@ -58,7 +68,7 @@ function fullcalendar_legend_block_configure($delta = '') {
  */
 function fullcalendar_legend_block_save($delta = '', $edit = array()) {
   if ($delta == 'fullcalendar_legend') {
-    variable_set('fullcalendar_legend_type', $edit['fullcalendar_legend_type']);
+    config_set('fullcalendar_legend.settings', 'fullcalendar_legend_type', $edit['fullcalendar_legend_type']);
   }
 }
 
@@ -78,7 +88,7 @@ function fullcalendar_legend_block_view($delta = '') {
     }
 
     // Build the block structure.
-    $block['content'] = fullcalendar_legend_build_legend($view, variable_get('fullcalendar_legend_type', 'bundle'));
+    $block['content'] = fullcalendar_legend_build_legend($view, config_get('fullcalendar_legend.settings', 'fullcalendar_legend_type'));
   }
 
   return $block;

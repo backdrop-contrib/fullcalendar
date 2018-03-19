@@ -50,7 +50,7 @@ function template_preprocess_fullcalendar_legend(&$variables) {
  * Render the legend.
  */
 function theme_fullcalendar_legend($variables) {
-  return drupal_render($variables['element']);
+  return backdrop_render($variables['element']);
 }
 
 /**
@@ -74,7 +74,7 @@ function _fullcalendar_legend_get_classes($type) {
   $entity->entity_type = $type['entity_type'];
 
   $classes = module_invoke_all('fullcalendar_classes', $entity);
-  drupal_alter('fullcalendar_classes', $classes, $entity);
+  backdrop_alter('fullcalendar_classes', $classes, $entity);
 
   return $classes;
 }

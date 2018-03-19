@@ -6,8 +6,10 @@
  */
 
 /**
- * Implements hook_uninstall().
+ * Implements hook_update_N().
  */
-function fullcalendar_legend_uninstall() {
-  variable_del('fullcalendar_legend_type');
+function fullcalendar_legend_update_1000() {
+  $config = config('fullcalendar_legend.settings');
+  $config->set('fullcalendar_legend_type', update_variable_get('fullcalendar_legend_type', 'bundle'));
+  update_variable_del('fullcalendar_legend_type');
 }

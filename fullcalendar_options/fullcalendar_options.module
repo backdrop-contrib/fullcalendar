@@ -37,6 +37,16 @@ function fullcalendar_options_fullcalendar_api() {
 }
 
 /**
+ * Implements hook_config_info().
+ */
+function fullcalendar_options_config_info() {
+  $prefixes['fullcalendar_options.settings'] = array(
+    'label' => t('FullCalendar Options settings'),
+    'group' => t('Configuration'),
+  );
+}
+
+/**
  * Provide basic form element for each option.
  *
  * This is a helper function so that it can be reused in the admin settings.
@@ -145,7 +155,7 @@ function _fullcalendar_options_list($show_all = FALSE) {
 
   // By default, restrict the form to options allowed by the admin settings.
   if (!$show_all) {
-    $form = array_intersect_key($form, array_filter(variable_get('fullcalendar_options', array())));
+    $form = array_intersect_key($form, array_filter(config_get('fullcalendar_options.settings', 'fullcalendar_options')));
 
     if (isset($form['dayClick'])) {
       // Add in dependency form elements.
