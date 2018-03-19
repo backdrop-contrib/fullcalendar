@@ -217,7 +217,11 @@ function hook_fullcalendar_options_form(&$form, &$form_state, &$view) {
     '#default_value' => $view->options['colorbox']['colorboxHeight'],
   );
 
-  $form['sameWindow']['#dependency'] = array('edit-style-options-colorbox-colorbox' => array(0));
+  $form['sameWindow']['#states'] = array(
+    'visible' => array(
+      ':input[name="style_options[colorbox][colorbox]"]' => array('checked' => FALSE),
+    ),
+  );
 }
 
 /**

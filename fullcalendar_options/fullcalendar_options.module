@@ -6,6 +6,15 @@
  */
 
 /**
+  * Load include files.
+  */
+module_load_include('inc','fullcalendar_options','includes/fullcalendar_options.admin');
+module_load_include('inc','fullcalendar_options','includes/fullcalendar_options.fullcalendar');
+module_load_include('inc','fullcalendar_options','includes/colorbox.fullcalendar');
+
+
+
+/**
  * Implements hook_menu().
  */
 function fullcalendar_options_menu() {
@@ -171,7 +180,11 @@ function _fullcalendar_options_list($show_all = FALSE) {
           'agendaDay' => 'Day (Agenda)',
           'basicDay' => 'Day (Basic)',
         ),
-        '#dependency' => array('edit-style-options-fullcalendar-options-dayclick' => array(1)),
+        '#states' => array(
+          'visible' => array(
+            ':input[name="style_options[fullcalendar_options][dayClick]"]' => array('checked' => TRUE),
+          ),
+        ),
       );
     }
   }

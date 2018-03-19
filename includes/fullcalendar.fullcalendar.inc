@@ -265,7 +265,11 @@ function fullcalendar_fullcalendar_options_form(&$form, &$form_state, &$view) {
     '#title' => t('Custom initial date'),
     '#title_display' => 'invisible',
     '#default_value' => $view->options['times']['date'],
-    '#dependency' => array('edit-style-options-times-default-date' => array(1)),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="style_options[times][default_date]"]' => array('checked' => TRUE),
+      ),
+    ),
     '#fieldset' => 'times',
   );
   $form['timeformat'] = array(
@@ -274,7 +278,11 @@ function fullcalendar_fullcalendar_options_form(&$form, &$form_state, &$view) {
     '#default_value' => $view->options['timeformat'],
     '#size' => '30',
     '#fieldset' => 'times',
-    '#dependency' => array('edit-style-options-advanced' => array(0)),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="style_options[advanced]"]' => array('checked' => FALSE),
+      ),
+    ),
   );
   $form['advanced'] = array(
     '#type' => 'checkbox',
@@ -290,7 +298,11 @@ function fullcalendar_fullcalendar_options_form(&$form, &$form_state, &$view) {
     '#default_value' => $view->options['axisFormat'],
     '#size' => '30',
     '#fieldset' => 'times',
-    '#dependency' => array('edit-style-options-advanced' => array(1)),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="style_options[advanced]"]' => array('checked' => TRUE),
+      ),
+    ),
   );
 
   // Add the nine time/date formats.
@@ -316,7 +328,11 @@ function fullcalendar_fullcalendar_options_form(&$form, &$form_state, &$view) {
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
     '#fieldset' => 'times',
-    '#dependency' => array('edit-style-options-advanced' => array(1)),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="style_options[advanced]"]' => array('checked' => TRUE),
+      ),
+    ),
   );
   $form['title'] = array(
     '#type' => 'fieldset',
@@ -325,7 +341,11 @@ function fullcalendar_fullcalendar_options_form(&$form, &$form_state, &$view) {
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
     '#fieldset' => 'times',
-    '#dependency' => array('edit-style-options-advanced' => array(1)),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="style_options[advanced]"]' => array('checked' => TRUE),
+      ),
+    ),
   );
   $form['column'] = array(
     '#type' => 'fieldset',
@@ -334,7 +354,11 @@ function fullcalendar_fullcalendar_options_form(&$form, &$form_state, &$view) {
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
     '#fieldset' => 'times',
-    '#dependency' => array('edit-style-options-advanced' => array(1)),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="style_options[advanced]"]' => array('checked' => TRUE),
+      ),
+    ),
   );
   $form['theme'] = array(
     '#type' => 'checkbox',
@@ -403,7 +427,11 @@ function fullcalendar_fullcalendar_options_form(&$form, &$form_state, &$view) {
     '#default_value' => $view->options['fields']['title_field'],
     '#description' => t('Choose the field with the custom title.'),
     '#process' => array('form_process_select'),
-    '#dependency' => array('edit-style-options-fields-title' => array(1)),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="style_options[fields][title]"]' => array('checked' => TRUE),
+      ),
+    ),
     '#fieldset' => 'fields',
   );
   $form['fields']['url'] = array(
@@ -420,7 +448,11 @@ function fullcalendar_fullcalendar_options_form(&$form, &$form_state, &$view) {
     '#default_value' => $view->options['fields']['url_field'],
     '#description' => t('Choose the field with the custom link.'),
     '#process' => array('form_process_select'),
-    '#dependency' => array('edit-style-options-fields-url' => array(1)),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="style_options[fields][url]"]' => array('checked' => TRUE),
+      ),
+    ),
     '#fieldset' => 'fields',
   );
   $form['fields']['date'] = array(
@@ -439,7 +471,11 @@ function fullcalendar_fullcalendar_options_form(&$form, &$form_state, &$view) {
     '#multiple' => TRUE,
     '#size' => count($date_fields),
     '#process' => array('form_process_select'),
-    '#dependency' => array('edit-style-options-fields-date' => array(1)),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="style_options[fields][date]"]' => array('checked' => TRUE),
+      ),
+    ),
     '#fieldset' => 'fields',
   );
 

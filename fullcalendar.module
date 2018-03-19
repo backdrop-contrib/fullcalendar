@@ -15,6 +15,7 @@ function fullcalendar_default_path() {
 /**
  * Load the .inc files.
  */
+module_load_include('php', 'fullcalendar', 'fullcalendar.api');
 module_load_include('inc', 'fullcalendar', 'includes/fullcalendar.fullcalendar');
 module_load_include('inc', 'fullcalendar', 'includes/views/fullcalendar.views');
 

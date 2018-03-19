@@ -52,29 +52,49 @@ function colorbox_fullcalendar_options_form(&$form, &$form_state, &$view) {
     '#type' => 'checkbox',
     '#title' => t('Open events in iFrame'),
     '#default_value' => $view->options['colorbox']['colorboxIFrame'],
-    '#dependency' => array('edit-style-options-colorbox-colorbox' => array(1)),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="style_options[colorbox][colorbox]"]' => array('checked' => TRUE),
+      ),
+    ),
     '#data_type' => 'bool',
   );
   $form['colorbox']['colorboxClass'] = array(
     '#type' => 'textfield',
     '#title' => t('Classname or ID selector'),
     '#default_value' => $view->options['colorbox']['colorboxClass'],
-    '#dependency' => array('edit-style-options-colorbox-colorbox' => array(1)),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="style_options[colorbox][colorbox]"]' => array('checked' => TRUE),
+      ),
+    ),
   );
   $form['colorbox']['colorboxWidth'] = array(
     '#type' => 'textfield',
     '#title' => t('Width'),
     '#default_value' => $view->options['colorbox']['colorboxWidth'],
-    '#dependency' => array('edit-style-options-colorbox-colorbox' => array(1)),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="style_options[colorbox][colorbox]"]' => array('checked' => TRUE),
+      ),
+    ),
   );
   $form['colorbox']['colorboxHeight'] = array(
     '#type' => 'textfield',
     '#title' => t('Height'),
     '#default_value' => $view->options['colorbox']['colorboxHeight'],
-    '#dependency' => array('edit-style-options-colorbox-colorbox' => array(1)),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="style_options[colorbox][colorbox]"]' => array('checked' => TRUE),
+      ),
+    ),
   );
 
-  $form['sameWindow']['#dependency'] = array('edit-style-options-colorbox-colorbox' => array(0));
+  $form['sameWindow']['#states'] = array(
+    'visible' => array(
+      ':input[name="style_options[colorbox][colorbox]"]' => array('checked' => FALSE),
+    ),
+  );
 }
 
 /**

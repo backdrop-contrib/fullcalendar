@@ -1,6 +1,6 @@
 (function($) {
 
-Drupal.fullcalendar.plugins.fullcalendar_options = {
+Backdrop.fullcalendar.plugins.fullcalendar_options = {
   options: function (fullcalendar, settings) {
     if (!settings.fullcalendar_options) {
       return;
