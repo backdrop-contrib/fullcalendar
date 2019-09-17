@@ -336,7 +336,11 @@ function fullcalendar_field_is_date($field, $include_gcal = FALSE) {
   if ($include_gcal && $field->field == 'gcal') {
     return TRUE;
   }
-
+  civicrm_initialize();
+  if (module_exists('civicrm') && (($field->field == 'end_date') || ($field->field == 'start_date') || ($field->field == 'registration_start_date') || ($field->field == 'registration_end_date'))) {
+//if ($field->field == 'end_date') {
+    return TRUE;
+  }
   return !empty($field->definition['is date']) && isset($field->field_info);
 }
 
