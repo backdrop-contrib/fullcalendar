@@ -135,7 +135,6 @@ function fullcalendar_prepare_events($view, $rows, $options) {
   if (empty($rows)) {
     return;
   }
-
   $events = array();
   foreach ($rows as $delta => $row) {
     // Collect all fields for the customize options.
@@ -145,12 +144,23 @@ function fullcalendar_prepare_events($view, $rows, $options) {
     foreach ($view->field as $field_name => $field) {
       $fields[$field_name] = $view->style_plugin->get_field($delta, $field_name);
       if (fullcalendar_field_is_date($field)) {
-        $date_fields[$field_name] = array(
-          'value' => $field->get_items($row),
-          'field_alias' => $field->field_alias,
-          'field_name' => $field->field_info['field_name'],
-          'field_info' => $field->field_info,
-        );
+        if ($field->table != 'civicrm_event') {
+          $date_fields[$field_name] = array(
+            'value' => $field->get_items($row),
+            'field_alias' => $field->field_alias,
+            'field_name' => $field->field_info['field_name'],
+            'field_info' => $field->field_info,
+          );
+        }
+        else {
+          //@todo: we'll need to make this work with CiviEvents
+          $date_fields[$field_name] = array(
+            'value' => array(),
+            'field_alias' => $field->field_alias,
+            'field_name' => $field->field_info['field_name'],
+            'field_info' => $field->field_info,
+          );
+        }
       }
     }
 
