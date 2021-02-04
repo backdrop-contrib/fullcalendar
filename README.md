@@ -1,9 +1,9 @@
 FullCalendar 
 =======
 
-Provides a Views display, style and row plugin for displaying nodes using Adam 
-Shaw's [FullCalendar](http://arshaw.com/fullcalendar) jQuery plugin, which is 
-bundled within the module. 
+Provides a Views display, style and row plugin for displaying nodes in 
+calendar form, using Adam Shaw's [FullCalendar](http://arshaw.com/fullcalendar)
+jQuery plugin, which is bundled within the module. 
 
 Installation
 ------------
