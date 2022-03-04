@@ -152,6 +152,11 @@ function fullcalendar_views_pre_view(&$view, &$display_id, &$args) {
  * Force the query to be distinct.
  */
 function fullcalendar_views_query_alter(&$view, &$query) {
+  // Prevent hook getting interpreted as hook_query_alter when module
+  // fullcalendar_views is also installed.
+  if (!isset($query)) {
+    return;
+  }
   if ($view->display_handler->get_option('style_plugin') != 'fullcalendar') {
     return;
   }
