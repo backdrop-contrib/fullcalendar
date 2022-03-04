@@ -1,9 +1,14 @@
-FullCalendar 
+FullCalendar (Legacy version)
 =======
 
-Provides a Views display, style and row plugin for displaying nodes in 
+Provides a Views display, style and row plugin for displaying nodes in
 calendar form, using Adam Shaw's [FullCalendar](http://arshaw.com/fullcalendar)
-jQuery plugin, which is bundled within the module. 
+jQuery plugin (v1.5.1), which is bundled within the module.
+
+NOTE: For a more recent version of FullCalendar and support for a wider range
+of date fields, you may wish to look into the more recent
+[FullCalendar Views](https://github.com/backdrop-contrib/fullcalendar_views)
+module.
 
 Installation
 ------------
@@ -29,16 +34,16 @@ Bugs and Feature requests should be reported in the [Issue Queue](https://github
 Current Maintainers
 -------------------
 
-- [Laryn Kragt Bakker](https://github.com/laryn/) - [CEDC.org](https://CEDC.org) 
+- [Laryn Kragt Bakker](https://github.com/laryn/) - [CEDC.org](https://CEDC.org)
 - Seeking comaintainers
 
 Credits
 -------
 
 - Ported to Backdrop CMS by [Laryn Kragt Bakker](https://github.com/laryn/) - [CEDC.org](https://CEDC.org)
-- Created and maintained for Drupal by [tim.plunkett](http://drupal.org/user/241634); 
-Co-maintainers: [dakala](http://drupal.org/user/53175), [aspilicious](http://drupal.org/user/172527); 
-Major contributors: [aspilicious](http://drupal.org/user/172527), [redndahead](http://drupal.org/user/160320), [geerlingguy](http://drupal.org/user/389011); 
+- Created and maintained for Drupal by [tim.plunkett](http://drupal.org/user/241634);
+Co-maintainers: [dakala](http://drupal.org/user/53175), [aspilicious](http://drupal.org/user/172527);
+Major contributors: [aspilicious](http://drupal.org/user/172527), [redndahead](http://drupal.org/user/160320), [geerlingguy](http://drupal.org/user/389011);
 Drupal 6 version originally written by [ablondeau](http://drupal.org/user/99763).
 - [FullCalendar](https://github.com/fullcalendar/fullcalendar) script is by [Adam Shaw](https://github.com/arshaw)
 
