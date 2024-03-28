@@ -382,7 +382,7 @@ function fullcalendar_get_version($fullcalendar_path = NULL) {
     }
 
     // Return the version of FullCalendar plugin.
-    $fullcalendar_plugin = file_get_contents($fullcalendar_path, NULL, NULL, 0, 40);
+    $fullcalendar_plugin = file_get_contents($fullcalendar_path, FALSE, NULL, 0, 40);
     if (preg_match($pattern, $fullcalendar_plugin, $matches)) {
       $version = $matches[1];
     }
